@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fpq_core',
     'fpq_user',
+    'fpq_author',
 ]
 
 MIDDLEWARE = [

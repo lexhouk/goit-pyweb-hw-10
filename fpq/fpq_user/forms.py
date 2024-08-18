@@ -3,15 +3,10 @@ from django.contrib.auth.models import User
 from django.forms import CharField, EmailField, EmailInput, PasswordInput, \
     TextInput
 
+from fpq_core.forms import attributes
+
 
 USERNAME = {'min_length': 3, 'max_length': 16, 'required': True}
-
-
-def attributes(identifier: str) -> dict:
-    if not identifier:
-        raise ValueError('The tag identifier can not be empty.')
-
-    return {'id': identifier, 'class': 'form-control'}
 
 
 class LoginForm(AuthenticationForm):

@@ -53,7 +53,13 @@
       {% endfor %}
 
       <main class="mt-5">
-        {% block content %}Welcome to the website!{% endblock %}
+        {% block content %}
+          <p>Welcome to the website!</p>
+
+          {% if user.is_authenticated %}
+            <a href="{% url 'fpq_author:create' %}">New author</a>
+          {% endif %}
+        {% endblock %}
       </main>
     </div>
   </body>
