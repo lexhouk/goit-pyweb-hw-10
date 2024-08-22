@@ -1,5 +1,5 @@
 from django.forms import CharField, DateField, DateInput, ModelForm, \
-    SlugField, Textarea, TextInput
+    Textarea, TextInput
 
 from fpq_core.forms import attributes
 from .models import Author
@@ -25,12 +25,12 @@ class CreationForm(ModelForm):
         widget=TextInput(attributes('born-location')),
     )
 
-    bio = SlugField(
-        allow_unicode=True,
+    bio = CharField(
+        min_length=30,
         required=True,
         widget=Textarea(attributes('bio')),
     )
 
     class Meta:
         model = Author
-        fields = ('name', 'born_date')
+        fields = ('name', 'born_date', 'born_location', 'bio')
