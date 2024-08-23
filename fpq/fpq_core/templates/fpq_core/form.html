@@ -7,11 +7,32 @@
     <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
   {% endif %}
 
-  <form method="post">
+  <form method="post" class="needs-validation" novalidate>
     {% csrf_token %}
 
     {% block form %}{% endblock %}
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+{% endblock %}
+
+{% block footer %}
+  <script>
+    (() => {
+      'use strict'
+
+      const forms = document.querySelectorAll('.needs-validation')
+
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+  </script>
 {% endblock %}

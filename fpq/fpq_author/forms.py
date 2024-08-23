@@ -1,34 +1,49 @@
+from datetime import datetime
+
 from django.forms import CharField, DateField, DateInput, ModelForm, \
     Textarea, TextInput
 
-from fpq_core.forms import attributes
+from fpq_core.forms import FormHelper
 from .models import Author
 
 
-class CreationForm(ModelForm):
+FORMAT = '%B %d, %Y'
+
+
+class CreationForm(FormHelper, ModelForm):
     name = CharField(
         min_length=10,
         max_length=50,
         required=True,
-        widget=TextInput(attributes('name')),
+        widget=TextInput(FormHelper.attributes('name')),
     )
 
     born_date = DateField(
         required=True,
-        widget=DateInput(attrs=attributes('born-date'), format='%B %d, %Y'),
+
+        widget=DateInput(
+            attrs={
+                **FormHelper.attributes('born-date'),
+                'placeholder': (
+                    'E.g.: '
+                    f'{datetime.now().date().strftime(FORMAT)}'
+                ),
+            },
+            format=FORMAT,
+        ),
     )
 
     born_location = CharField(
         min_length=10,
         max_length=100,
         required=True,
-        widget=TextInput(attributes('born-location')),
+        widget=TextInput(FormHelper.attributes('born-location')),
     )
 
     bio = CharField(
         min_length=30,
         required=True,
-        widget=Textarea(attributes('bio')),
+        widget=Textarea(FormHelper.attributes('bio')),
     )
 
     class Meta:

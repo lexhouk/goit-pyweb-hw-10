@@ -15,7 +15,6 @@ class FormView(ABC, View):
         ...
 
     def dispatch(self, request: WSGIRequest) -> Response:
-        print(request.user.is_anonymous, self._guest())
         if request.user.is_anonymous == self._guest():
             return redirect('fpq_core:index')
 
