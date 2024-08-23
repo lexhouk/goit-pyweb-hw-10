@@ -16,14 +16,42 @@
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'fpq_core:index' %}">Quotes</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'fpq_core:index' %}"
+              >
+                Home
+              </a>
             </li>
+
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="{% url 'fpq_author:create' %}"
+                >
+                  New author
+                </a>
+              </li>
+            {% endif %}
           </ul>
           <span class="navbar-text">
             Hello,
@@ -37,14 +65,20 @@
           <ul class="navbar-nav">
             {% if user.is_anonymous %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'fpq_user:login' %}">Sign in</a>
+                <a class="nav-link" href="{% url 'fpq_user:login' %}">
+                  Sign in
+                </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'fpq_user:register' %}">Sign up</a>
+                <a class="nav-link" href="{% url 'fpq_user:register' %}">
+                  Sign up
+                </a>
               </li>
             {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'fpq_user:logout' %}">Logout</a>
+                <a class="nav-link" href="{% url 'fpq_user:logout' %}">
+                  Logout
+                </a>
               </li>
             {% endif %}
           </ul>
@@ -60,10 +94,21 @@
 
       <main class="mt-5">
         {% block content %}
-          <p>Welcome to the website!</p>
-
-          {% if user.is_authenticated %}
-            <a href="{% url 'fpq_author:create' %}">New author</a>
+          {% if quotes %}
+            {% for quote in quotes %}
+              <div class="card mt-4">
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <p>{{ quote.phrase }}</p>
+                    <footer class="blockquote-footer text-end">
+                      {{ quote.author }}
+                    </footer>
+                  </blockquote>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>Welcome to the website!</p>
           {% endif %}
         {% endblock %}
       </main>

@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('fpq_core.urls')),
     path('user/', include('fpq_user.urls')),
     path('author/', include('fpq_author.urls')),
+    path('quote/', include('fpq_quote.urls')),
     path('admin/', admin.site.urls),
 ]

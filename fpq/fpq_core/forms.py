@@ -20,8 +20,11 @@ class FormHelper:
             if not form.errors.get(name):
                 continue
 
-            attribute = field.widget.attrs.get('class', '')
-            field.widget.attrs['class'] = attribute + ' is-invalid'
+            MAPPING = {
+                'class': 'class',
+                'id': 'aria-describedby',
+            }
 
-            attribute = field.widget.attrs['id']
-            field.widget.attrs['aria-describedby'] = attribute + '-error'
+            for source, target in MAPPING.items():
+                attribute = field.widget.attrs.get(source, '')
+                field.widget.attrs[target] = attribute + ' is-invalid'
