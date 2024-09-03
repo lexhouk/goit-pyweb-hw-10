@@ -111,7 +111,12 @@
                   <blockquote class="blockquote mb-0">
                     <p>{{ quote.phrase }}</p>
                     <footer class="blockquote-footer text-end">
-                      {{ quote.author }}
+                      <a
+                        href="{% url 'fpq_author:detail' quote.author.id %}"
+                        class="link-secondary link-underline-light link-offset-2"
+                      >
+                        {{ quote.author }}
+                      </a>
                     </footer>
                   </blockquote>
                 </div>
