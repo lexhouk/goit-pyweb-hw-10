@@ -12,16 +12,21 @@ class CreationView(FormView):
     template_name = 'fpq_quote/create.html'
     form_class = CreationForm
 
-    def _context() -> dict:
+    def _context(self) -> dict:
         return {**super()._context(), 'authors': Author.objects.all()}
 
     def _guest(self) -> bool:
         return True
 
-    def _save(response: QueryDict, form: ModelForm, commit=True) -> Any:
-        quote = super()._save(False)
+    def _save(
+        self,
+        response: QueryDict,
+        form: ModelForm,
+        commit: bool = True
+    ) -> Any:
+        quote = super()._save(response, form, False)
 
-        quote.author = response['author']
+        quote.author = Author.objects.get(id=response['author'])
 
         quote.save()
 

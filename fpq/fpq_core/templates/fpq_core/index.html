@@ -44,11 +44,21 @@
             {% if user.is_authenticated %}
               <li class="nav-item">
                 <a
-                  class="nav-link active"
+                  class="nav-link"
                   aria-current="page"
                   href="{% url 'fpq_author:create' %}"
                 >
                   New author
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="{% url 'fpq_quote:create' %}"
+                >
+                  New quote
                 </a>
               </li>
             {% endif %}

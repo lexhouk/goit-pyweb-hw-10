@@ -1,8 +1,9 @@
 [tool.poetry]
-name = "goit-pyweb-hw-10"
+name = "Famous people quotes (FPQ)"
 version = "0.1.0"
-description = "Famous people quotes (FPQ) web application based on the Django framework."
+description = "Web application based on the Django framework."
 authors = ["Oleksandr Horbatiuk <oleksandr.v.horbatiuk@gmail.com>"]
+readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]

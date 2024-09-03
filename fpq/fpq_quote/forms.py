@@ -10,6 +10,11 @@ class CreationForm(FormHelper, ModelForm):
         widget=Textarea(FormHelper.attributes('phrase')),
     )
 
+    def __init__(self, *args: tuple, **kwargs: dict) -> None:
+        super().__init__(*args, **kwargs)
+
+        self.fields['phrase'].widget.attrs['rows'] = 3
+
     class Meta:
         model = Quote
         fields = ('phrase',)

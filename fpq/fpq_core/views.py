@@ -14,15 +14,19 @@ Response = HttpResponse | HttpResponsePermanentRedirect
 
 
 class FormView(ABC, View):
-    @staticmethod
-    def _context() -> dict:
+    def _context(self) -> dict:
         return dict()
 
     @abstractmethod
     def _guest(self) -> bool:
         ...
 
-    def _save(response: QueryDict, form: ModelForm, commit=True) -> Any:
+    def _save(
+        self,
+        response: QueryDict,
+        form: ModelForm,
+        commit: bool = True
+    ) -> Any:
         return form.save(commit)
 
     def dispatch(self, request: WSGIRequest) -> Response:
