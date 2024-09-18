@@ -13,7 +13,7 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg bg-light{% if user.is_authenticated %} bg-dark" data-bs-theme="dark{% endif %}">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'fpq_core:index' %}">Quotes</a>
 
