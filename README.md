@@ -5,17 +5,18 @@
 ```bash
 $ git clone https://github.com/lexhouk/goit-pyweb-hw-10.git
 $ cd goit-pyweb-hw-10
-$ echo 'your database user password' > .secret
-$ docker run --name lexhouk-hw-10 -p 5432:5432 -e "POSTGRES_PASSWORD=$(cat .secret)" -d postgres
+$ docker compose up -d
 $ poetry install
 $ cd fpq
 $ python manage.py migrate
+$ python -m utils.migration
+$ python manage.py createsuperuser
 ```
 
 ## Usage
 
 ```bash
-$ docker run --name lexhouk-hw-10 -p 5432:5432 -e "POSTGRES_PASSWORD=$(cat .secret)" -d postgres
+$ docker compose up -d
 $ poetry shell
 $ cd fpq
 $ python manage.py runserver

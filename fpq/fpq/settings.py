@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from os import environ
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,14 +80,16 @@ WSGI_APPLICATION = 'fpq.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+load_dotenv()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': (BASE_DIR.parent / '.secret').read_text('utf-8'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': environ.get('POSTGRES_DATABASE', 'postgres'),
+        'USER': environ.get('POSTGRES_USER', 'postgres'),
+        'PASSWORD': environ['POSTGRES_PASSWORD'],
+        'HOST': environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': environ.get('POSTGRES_PORT', 5432),
     }
 }
 
