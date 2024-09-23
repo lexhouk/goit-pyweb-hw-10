@@ -153,6 +153,25 @@
                   </div>
                 </div>
               {% endfor %}
+
+              <nav aria-label="Other quotes">
+                <ul class="pagination justify-content-center">
+                  {% for label, page in pager.items %}
+                    <li class="page-item{% if not page != '#' %} disabled{% endif %}">
+                      {% if page != '#' %}
+                        <a
+                          href="{% url 'fpq_core:index' %}?{% if current_tag %}tag={{ current_tag.id }}&{% endif %}page={{ page }}"
+                          class="page-link"
+                        >
+                          {{ label }}
+                        </a>
+                      {% else %}
+                        <span class="page-link">{{ label }}</span>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </nav>
             {% else %}
               <p>Welcome to the website!</p>
             {% endif %}

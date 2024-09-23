@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 from django.core.handlers.wsgi import WSGIRequest
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count, F, Window
 from django.db.models.functions import RowNumber
 from django.forms import ModelForm
@@ -80,5 +81,23 @@ def index(request: WSGIRequest) -> HttpResponse:
             query = query.filter(tags=tag_id)
 
     context['quotes'] = query.all()
+
+    paginator = Paginator(range(len(context['quotes'])), size := 10)
+    page = request.GET.get('page', 1)
+
+    offset = size * (int(page) - 1)
+    context['quotes'] = context['quotes'][offset:offset + size]
+
+    try:
+        page = paginator.page(page)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    context['pager'] = {
+        'Previous': page.previous_page_number if page.has_previous else '#',
+        'Next': page.next_page_number if page.has_next else '#',
+    }
 
     return render(request, 'fpq_core/index.html', context)
