@@ -19,8 +19,9 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('fpq_core.urls')),
-    path('user/', include('fpq_user.urls')),
-    path('author/', include('fpq_author.urls')),
-    path('quote/', include('fpq_quote.urls')),
+    *[
+        path(f'{name}/', include(f'fpq_{name}.urls'))
+        for name in ('user', 'author', 'quote')
+    ],
     path('admin/', admin.site.urls),
 ]

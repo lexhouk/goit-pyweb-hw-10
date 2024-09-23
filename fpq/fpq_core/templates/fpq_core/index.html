@@ -96,7 +96,12 @@
       </div>
     </nav>
     <div class="container mt-5">
-      <h1>{% block title %}Quotes{% endblock %}</h1>
+      <h1>
+        {% block title %}
+          Quotes
+          {% if current_tag %}with tag <i>{{ current_tag }}</i>{% endif %}
+        {% endblock %}
+      </h1>
 
       {% for message in messages %}
         <div class="alert alert-danger" role="alert">{{ message }}</div>
@@ -115,7 +120,12 @@
                     <div class="row">
                       <div class="col">
                         {% for tag in quote.tags|tags %}
-                          <span class="badge text-bg-secondary">{{ tag }}</span>
+                          <a
+                            href="{% url 'fpq_core:index' %}?tag={{ tag.id }}"
+                            class="badge text-bg-{% if current_tag == tag %}success{% else %}secondary{% endif %} link-underline link-underline-opacity-0"
+                          >
+                            {{ tag }}
+                          </a>
                         {% endfor %}
                       </div>
                       <div class="col">

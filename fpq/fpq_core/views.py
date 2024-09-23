@@ -4,10 +4,11 @@ from typing import Any
 from django.core.handlers.wsgi import WSGIRequest
 from django.forms import ModelForm
 from django.http import HttpResponse, HttpResponsePermanentRedirect, QueryDict
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
 from fpq_quote.models import Quote
+from fpq_tag.models import Tag
 
 
 Response = HttpResponse | HttpResponsePermanentRedirect
@@ -58,5 +59,15 @@ class FormView(ABC, View):
 
 
 def index(request: WSGIRequest) -> HttpResponse:
-    quotes = Quote.objects.all()
-    return render(request, 'fpq_core/index.html', {'quotes': quotes})
+    query = Quote.objects
+    context = {}
+
+    if (tag_id := request.GET.get('tag')):
+        context['current_tag'] = Tag.objects.filter(pk=tag_id).first()
+
+        if context['current_tag']:
+            query = query.filter(tags=tag_id)
+
+    context['quotes'] = query.all()
+
+    return render(request, 'fpq_core/index.html', context)
