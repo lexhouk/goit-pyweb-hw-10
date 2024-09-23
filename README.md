@@ -1,5 +1,21 @@
 # Quotes
 
+## Development
+
+```bash
+$ git clone https://github.com/lexhouk/goit-pyweb-hw-10.git
+$ cd goit-pyweb-hw-10
+$ docker compose up -d
+$ django-admin startproject fpq
+$ cd fpq
+$ python manage.py startapp fpq_core
+$ python manage.py startapp fpq_user
+$ python manage.py startapp fpq_author
+$ python manage.py startapp fpq_quote
+$ python manage.py startapp fpq_tag
+$ python manage.py makemigrations
+```
+
 ## Deployment
 
 ```bash

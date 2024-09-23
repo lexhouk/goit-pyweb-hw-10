@@ -16,6 +16,7 @@ from pymongo.errors import ConfigurationError
 
 from fpq_author.models import Author as TargetAuthor
 from fpq_quote.models import Quote as TargetQuote
+from fpq_tag.models import Tag
 
 
 class Author(Document):
@@ -32,28 +33,32 @@ class Quote(Document):
     quote = StringField(required=True)
     meta = {'collection': 'quotes'}
 
+
 try:
     connect(
         db=environ['MONGODB_DATABASE'],
         host=environ['MONGODB_URL'],
         tls=True,
-        tlsAllowInvalidCertificates=True
+        tlsAllowInvalidCertificates=True,
     )
 except (ConfigurationError, ConnectionFailure):
     raise Exception('Invalid credentials.')
 
-authors = {}
-
-for author in Author.objects():
-    authors[author.id] = TargetAuthor.objects.get_or_create(
+authors = {
+    author.id: TargetAuthor.objects.get_or_create(
         name=author.fullname,
         born_date=author.born_date,
         born_location=author.born_location,
         bio=author.description,
     )[0]
+    for author in Author.objects()
+}
 
-for quote in Quote.objects():
-    TargetQuote.objects.get_or_create(
-        author=authors[quote.author.id],
-        phrase=quote.quote,
+for source_quote in Quote.objects():
+    target_quote, _ = TargetQuote.objects.get_or_create(
+        author=authors[source_quote.author.id],
+        phrase=source_quote.quote,
     )
+
+    for tag in source_quote.tags:
+        target_quote.tags.add(Tag.objects.get_or_create(name=tag)[0])

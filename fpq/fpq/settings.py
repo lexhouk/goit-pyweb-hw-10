@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 from os import environ
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'fpq_user',
     'fpq_author',
     'fpq_quote',
+    'fpq_tag',
 ]
 
 MIDDLEWARE = [

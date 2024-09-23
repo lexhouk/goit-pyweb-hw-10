@@ -105,19 +105,30 @@
       <main class="mt-5">
         {% block content %}
           {% if quotes %}
+            {% load extract_tags %}
+
             {% for quote in quotes %}
               <div class="card mt-4">
                 <div class="card-body">
                   <blockquote class="blockquote mb-0">
                     <p>{{ quote.phrase }}</p>
-                    <footer class="blockquote-footer text-end">
-                      <a
-                        href="{% url 'fpq_author:detail' quote.author.id %}"
-                        class="link-secondary link-underline-light link-offset-2"
-                      >
-                        {{ quote.author }}
-                      </a>
-                    </footer>
+                    <div class="row">
+                      <div class="col">
+                        {% for tag in quote.tags|tags %}
+                          <span class="badge text-bg-secondary">{{ tag }}</span>
+                        {% endfor %}
+                      </div>
+                      <div class="col">
+                        <footer class="blockquote-footer text-end mt-0 mb-0">
+                          <a
+                            href="{% url 'fpq_author:detail' quote.author.id %}"
+                            class="link-secondary link-underline-light link-offset-2"
+                          >
+                            {{ quote.author }}
+                          </a>
+                        </footer>
+                      </div>
+                    </div>
                   </blockquote>
                 </div>
               </div>

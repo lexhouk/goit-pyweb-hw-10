@@ -18,4 +18,4 @@ class CreationForm(FormHelper, ModelForm):
     class Meta:
         model = Quote
         fields = ('phrase',)
-        exclude = ('author',)
+        exclude = ('author', 'tags')
