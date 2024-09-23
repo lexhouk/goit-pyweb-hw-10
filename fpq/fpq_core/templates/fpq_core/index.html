@@ -61,6 +61,16 @@
                   New quote
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="{% url 'fpq_scraper:scrape' %}"
+                >
+                  Scrape
+                </a>
+              </li>
             {% endif %}
           </ul>
           <span class="navbar-text">
@@ -178,29 +188,31 @@
           {% endblock %}
         </div>
         <div class="col">
-          <div class="card">
-            <div class="card-header text-center">Top Ten tags</div>
-            <div class="list-group list-group-flush">
-              {% for tag in tags %}
-                <a
-                  href="{% url 'fpq_core:index' %}?tag={{ tag.id }}"
-                  class="
-                    list-group-item
-                    list-group-item-action
-                    {% if current_tag == tag %}active{% endif %}
-                    d-flex
-                    justify-content-between
-                    align-items-center
-                  "
-                >
-                  {{ tag.name }}
-                  <span class="badge text-bg-secondary rounded-pill">
-                    {{ tag.usages }}
-                  </span>
-                </a>
-              {% endfor %}
+          {% if tags %}
+            <div class="card">
+              <div class="card-header text-center">Top Ten tags</div>
+              <div class="list-group list-group-flush">
+                {% for tag in tags %}
+                  <a
+                    href="{% url 'fpq_core:index' %}?tag={{ tag.id }}"
+                    class="
+                      list-group-item
+                      list-group-item-action
+                      {% if current_tag == tag %}active{% endif %}
+                      d-flex
+                      justify-content-between
+                      align-items-center
+                    "
+                  >
+                    {{ tag.name }}
+                    <span class="badge text-bg-secondary rounded-pill">
+                      {{ tag.usages }}
+                    </span>
+                  </a>
+                {% endfor %}
+              </div>
             </div>
-          </div>
+          {% endif %}
         </div>
       </main>
     </div>

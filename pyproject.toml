@@ -12,6 +12,9 @@ django = "^5.1"
 psycopg2-binary = "^2.9.9"
 mongoengine = "^0.29.1"
 python-dotenv = "^1.0.1"
+beautifulsoup4 = "^4.12.3"
+requests = "^2.32.3"
+lxml = "^5.3.0"
 
 
 [build-system]

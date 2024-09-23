@@ -13,6 +13,7 @@ $ python manage.py startapp fpq_user
 $ python manage.py startapp fpq_author
 $ python manage.py startapp fpq_quote
 $ python manage.py startapp fpq_tag
+$ python manage.py startapp fpq_scraper
 $ python manage.py makemigrations
 ```
 

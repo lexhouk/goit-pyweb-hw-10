@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'fpq_author',
     'fpq_quote',
     'fpq_tag',
+    'fpq_scraper',
 ]
 
 MIDDLEWARE = [

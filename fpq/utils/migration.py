@@ -8,15 +8,15 @@ load_dotenv()
 setup()
 
 
-from mongoengine import connect, Document
-from mongoengine.connection import ConnectionFailure
+from mongoengine import connect, Document # noqa
+from mongoengine.connection import ConnectionFailure # noqa
 from mongoengine.fields import DateField, ListField, ReferenceField, \
-    StringField
-from pymongo.errors import ConfigurationError
+    StringField # noqa
+from pymongo.errors import ConfigurationError # noqa
 
-from fpq_author.models import Author as TargetAuthor
-from fpq_quote.models import Quote as TargetQuote
-from fpq_tag.models import Tag
+from fpq_author.models import Author as TargetAuthor # noqa
+from fpq_quote.models import Quote as TargetQuote # noqa
+from fpq_tag.models import Tag # noqa
 
 
 class Author(Document):

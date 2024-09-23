@@ -7,7 +7,7 @@ from fpq_tag.models import Tag
 
 class Quote(Model):
     author = ForeignKey(Author, CASCADE)
-    phrase = CharField(max_length=200, null=False)
+    phrase = CharField(max_length=1300, null=False)
     tags = ManyToManyField(Tag, related_name='quotes')
 
     def __str__(self) -> str:

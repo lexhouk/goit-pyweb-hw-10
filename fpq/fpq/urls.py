@@ -23,5 +23,6 @@ urlpatterns = [
         path(f'{name}/', include(f'fpq_{name}.urls'))
         for name in ('user', 'author', 'quote')
     ],
+    path('scrape/', include('fpq_scraper.urls')),
     path('admin/', admin.site.urls),
 ]
