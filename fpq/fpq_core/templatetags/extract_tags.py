@@ -7,7 +7,7 @@ register = Library()
 
 
 def tags(tags) -> list[Tag]:
-    return [tag for tag in tags.all()]
+    return tags.all()
 
 
 register.filter('tags', tags)

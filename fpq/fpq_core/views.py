@@ -2,9 +2,11 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 from django.core.handlers.wsgi import WSGIRequest
+from django.db.models import Count, F, Window
+from django.db.models.functions import RowNumber
 from django.forms import ModelForm
 from django.http import HttpResponse, HttpResponsePermanentRedirect, QueryDict
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.views import View
 
 from fpq_quote.models import Quote
@@ -59,8 +61,17 @@ class FormView(ABC, View):
 
 
 def index(request: WSGIRequest) -> HttpResponse:
+    tags = Tag.objects.annotate(
+        usages=Count('quotes'),
+        row_number=Window(
+            RowNumber(),
+            order_by=(F('usages').desc(), F('name').asc()),
+        ),
+    ).filter(row_number__lte=10)
+
+    context = {'tags': tags}
+
     query = Quote.objects
-    context = {}
 
     if (tag_id := request.GET.get('tag')):
         context['current_tag'] = Tag.objects.filter(pk=tag_id).first()
